@@ -1,0 +1,7 @@
+dependencies {
+    implementation "org.web3j:core:$web3jVersion"
+    implementation("org.web3j:web3j-unit:$web3jVersion")
+    implementation("org.web3j:web3j-evm:$web3jVersion")
+
+    //    implementation "org.muellners.finscale.contracts:0.1.0"
+}
