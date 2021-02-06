@@ -62,7 +62,7 @@ spring:
         enabled: true
 
 server:
-  port: 9005
+  port: 9012
 
 # ===================================================================
 # JHipster specific properties
@@ -118,6 +118,9 @@ oauth2:
     #keep in sync with UAA configuration
     client-id: web_app
     secret: changeit
+
+web3j:
+  client-address: http://127.0.0.1:7545
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
