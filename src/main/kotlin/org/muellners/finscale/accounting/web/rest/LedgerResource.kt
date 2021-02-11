@@ -65,7 +65,6 @@ class LedgerResource(
     @GetMapping("/ledgers")
     fun getAllLedgers(): ResponseEntity<MutableSet<LedgerDTO>> {
         log.debug("REST request to get all Ledgers")
-
         return ResponseEntity.ok().body(ledgerService.findAll())
     }
 

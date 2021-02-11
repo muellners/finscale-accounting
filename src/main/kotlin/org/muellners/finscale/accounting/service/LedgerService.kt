@@ -48,16 +48,29 @@ class LedgerService(
     fun findAll(): MutableSet<LedgerDTO> {
         log.debug("Request to get all Ledgers")
 
-        // TODO: 2/6/21 Implement getting all the addresses from indexer, retrieving details and respond
-        return mutableSetOf()
+        // TODO: 2/6/21 Implement getting all the addresses from indexer, retrieving details and respond )
+
+        val ledgers = mutableSetOf<LedgerDTO>()
+        val contractAddresses = indexer.retrieveAll(ContractType.LEDGER)
+
+        for (contractAddress in contractAddresses) {
+            var ledgerDTO = getLedgerDetails(contractAddress)
+            ledgers.add(ledgerDTO)
+        }
+        return ledgers
     }
 
     fun findOne(id: UUID): Optional<LedgerDTO> {
         log.debug("Request to get Ledger : $id")
 
         val contractAddress = indexer.retrieve(ContractType.LEDGER, id.toString()) ?: return Optional.empty()
-        val ledgerContract = Ledger.load(contractAddress, web3j, credentials, GanacheGasProvider())
+        val ledgerDTO = getLedgerDetails(contractAddress)
 
+        return Optional.of(ledgerDTO)
+    }
+
+    fun getLedgerDetails(contractAddress: String?): LedgerDTO {
+        val ledgerContract = Ledger.load(contractAddress, web3j, credentials, GanacheGasProvider())
         // TODO: 2/6/21 Possibly some kind of mapper using mapstruct
         val ledgerDTO = LedgerDTO()
         ledgerDTO.id = ledgerContract.id().send()
@@ -69,7 +82,6 @@ class LedgerService(
         ledgerDTO.totalValue = ledgerContract.totalValue().send().toBigDecimal()
         ledgerDTO.showAccountsInChart = ledgerContract.showAccountsInChart().send()
         ledgerDTO.parentLedgerId = ledgerContract.parentLedgerId().send()
-
-        return Optional.of(ledgerDTO)
+        return ledgerDTO
     }
 }
