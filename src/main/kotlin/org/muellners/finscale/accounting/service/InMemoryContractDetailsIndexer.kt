@@ -13,9 +13,12 @@ class InMemoryContractDetailsIndexer : ContractDetailsIndexer {
         contractTypes[contractType]?.set(id, address)
     }
 
-    override fun retrieve(contractType: ContractType, id: String) = contractTypes[contractType]?.get(id)
+    override fun retrieve(contractType: ContractType, id: String): String? = contractTypes[contractType]?.get(id)
 
-    override fun retrieveAll(contractType: ContractType): List<String> {
-        TODO("Not yet implemented")
+    override fun retrieveAll(contractType: ContractType): List<String?> {
+        // TODO 2/11/21
+        val newList = arrayListOf<String>()
+        contractTypes[contractType]?.forEach { (key, value) -> newList.add(value) }
+        return newList
     }
 }

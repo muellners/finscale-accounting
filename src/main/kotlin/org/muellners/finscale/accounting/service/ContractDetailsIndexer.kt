@@ -6,5 +6,5 @@ interface ContractDetailsIndexer {
 
     fun store(contractType: ContractType, id: String, address: String)
     fun retrieve(contractType: ContractType, id: String): String?
-    fun retrieveAll(contractType: ContractType): List<String>
+    fun retrieveAll(contractType: ContractType): List<String?>
 }
